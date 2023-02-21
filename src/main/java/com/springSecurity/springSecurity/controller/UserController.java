@@ -1,9 +1,10 @@
 package com.springSecurity.springSecurity.controller;
-
 import com.springSecurity.springSecurity.models.User;
 import com.springSecurity.springSecurity.payload.requests.UserRequest;
 import com.springSecurity.springSecurity.payload.responses.UserResponse;
+import com.springSecurity.springSecurity.repository.UserRepositiory;
 import com.springSecurity.springSecurity.service.UserService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class UserController {
     private static final Logger log = (Logger) LoggerFactory.getLogger(User.class);
     @Autowired
     private UserService service;
+    @Autowired
+    private UserRepositiory userRepository;
 
     /* saving user */
     @PostMapping("/users")
@@ -38,7 +41,15 @@ public class UserController {
     /* updating user */
     @PutMapping("/users/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')  or hasRole('SERVICEP')")
-    public ResponseEntity<UserResponse> updateStudent(@PathVariable String id, @RequestBody UserRequest userRequest){
+    public ResponseEntity<?> updateStudent(@PathVariable String id, @RequestBody UserRequest userRequest){
+
+        if (userRepository.existsByUsername(userRequest.getUsername())) {
+            return ResponseEntity.badRequest().body("Error: Username is already taken!");
+        }
+        if (userRepository.existsByEmail(userRequest.getEmail())) {
+            return ResponseEntity.badRequest().body("Error: Email is already in use!");
+        }
+
         try{
             UserResponse userResponse = service.updateUser(id, userRequest);
             return new ResponseEntity<>(userResponse, HttpStatus.OK);
