@@ -1,0 +1,15 @@
+version: '3'
+services:
+  mongo-j-cont:
+    image: mongo:latest
+    container_name: mongo-j-cont
+    ports:
+        - 27017:27017
+  springboot-security:
+      image: springboot-security:1.0
+      build: ../../../../../../../..
+      container_name: springboot-security-mongodb
+      ports:
+        - 8080:8080
+      links:
+        - mongo-j-cont
