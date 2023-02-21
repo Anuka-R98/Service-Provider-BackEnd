@@ -9,7 +9,6 @@ import com.springSecurity.springSecurity.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -79,8 +78,8 @@ public class UserService {
         try {
             return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id:" + id));
         } catch(Exception e) {
-            log.error("An erro occured while retriving the requested user", e);
-            throw new Exception("An erro occured while retriving the requested user" + e.getMessage());
+            log.error("An error occurred while retrieving the requested user", e);
+            throw new Exception("An error occurred while retrieving the requested user" + e.getMessage());
         }
     }
 
@@ -90,8 +89,8 @@ public class UserService {
         try {
             return userRepository.findByUsername(name).orElseThrow(() -> new ResourceNotFoundException("User not found with name:" + name));
         } catch(Exception e) {
-            log.error("An erro occured while retriving the requested user", e);
-            throw new Exception("An erro occured while retriving the requested user" + e.getMessage());
+            log.error("An error occurred while retrieving the requested user", e);
+            throw new Exception("An error occurred while retrieving the requested user" + e.getMessage());
         }
     }
 
@@ -102,8 +101,8 @@ public class UserService {
             userRepository.deleteById(id);
             return "User : " + id + " deleted successfully";
         } catch(Exception e) {
-            log.error("An error occured while deleting the requested user", e);
-            throw new Exception("An error occured while deleting the requested user" + e.getMessage());
+            log.error("An error occurred while deleting the requested user", e);
+            throw new Exception("An error occurred while deleting the requested user" + e.getMessage());
         }
     }
 }
