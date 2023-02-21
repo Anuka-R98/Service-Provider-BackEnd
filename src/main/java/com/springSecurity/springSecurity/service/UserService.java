@@ -1,4 +1,4 @@
-package com.springSecurity.springSecurity.security.services;
+package com.springSecurity.springSecurity.service;
 
 import com.springSecurity.springSecurity.customExceptions.ResourceNotFoundException;
 import com.springSecurity.springSecurity.payload.requests.UserRequest;
