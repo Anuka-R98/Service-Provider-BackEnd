@@ -68,9 +68,6 @@ public class AuthController {
                     userDetails.getUsername(),
                     userDetails.getEmail(),
                     roles));
-//                    console.log(userDetails.getUsername()+userDetails.getId());
-
-
 
             }catch(AuthenticationException e){
                  throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password", e);

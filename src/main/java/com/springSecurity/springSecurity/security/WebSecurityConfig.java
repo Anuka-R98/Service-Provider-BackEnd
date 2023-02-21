@@ -62,25 +62,14 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeHttpRequests().requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/test/**").permitAll()
-                .anyRequest().authenticated();
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
+//                .authorizeHttpRequests().requestMatchers("/api/auth/**").permitAll()
+//                .requestMatchers("/api/test/**").permitAll()
+//                .anyRequest().authenticated();
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-    //    @Bean
-    //    public CorsConfigurationSource corsConfigurationSource() {
-    //        CorsConfiguration configuration = new CorsConfiguration();
-    //        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-    //        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-    //        configuration.setAllowedHeaders(Arrays.asList("content-type", "Authorization"));
-    //
-    //        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    //        source.registerCorsConfiguration("/**", configuration);
-    //
-    //        return source;
-    //    }
+
 }

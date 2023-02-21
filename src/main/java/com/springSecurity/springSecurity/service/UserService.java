@@ -9,6 +9,7 @@ import com.springSecurity.springSecurity.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public class UserService {
     private static final Logger log = (Logger) LoggerFactory.getLogger(User.class);
     @Autowired
     private UserRepositiory userRepository;
+    @Autowired
+    PasswordEncoder encoder;
 
     /* saving user */
     public UserResponse saveUser(UserRequest userRequest){
@@ -43,7 +46,7 @@ public class UserService {
         User existingUser = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User with id : " + id + " not found ! "));
         existingUser.setUsername(userRequest.getUsername());
         existingUser.setEmail(userRequest.getEmail());
-        existingUser.setPassword(userRequest.getPassword());
+        existingUser.setPassword(encoder.encode(userRequest.getPassword()));
 
         log.info("Updating User : " + existingUser.getUsername());
         userRepository.save(existingUser);
