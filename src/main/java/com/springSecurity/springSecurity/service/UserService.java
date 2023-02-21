@@ -78,4 +78,27 @@ public class UserService {
             throw new Exception("An erro occured while retriving the requested user" + e.getMessage());
         }
     }
+
+    /* get specific user using name */
+    public User getUserbyName(String name) throws Exception {
+        log.info("Getting user with id: {}" + name);
+        try {
+            return userRepository.findByUsername(name).orElseThrow(() -> new ResourceNotFoundException("User not found with name:" + name));
+        } catch(Exception e) {
+            log.error("An erro occured while retriving the requested user", e);
+            throw new Exception("An erro occured while retriving the requested user" + e.getMessage());
+        }
+    }
+
+    /* delete user by id */
+    public String deleteUser(String id) throws Exception {
+        log.info("Deleting user with idL " + id);
+        try{
+            userRepository.deleteById(id);
+            return "User : " + id + " deleted successfully";
+        } catch(Exception e) {
+            log.error("An error occured while deleting the requested user", e);
+            throw new Exception("An error occured while deleting the requested user" + e.getMessage());
+        }
+    }
 }
