@@ -1,9 +1,12 @@
 package com.ServiceProvider.App.service;
 
 import com.ServiceProvider.App.customExceptions.ResourceNotFoundException;
+import com.ServiceProvider.App.models.ERole;
+import com.ServiceProvider.App.models.Role;
 import com.ServiceProvider.App.models.User;
 import com.ServiceProvider.App.payload.requests.UserRequest;
 import com.ServiceProvider.App.payload.responses.UserResponse;
+import com.ServiceProvider.App.repository.RoleRepository;
 import com.ServiceProvider.App.repository.UserRepositiory;
 
 import org.slf4j.Logger;
@@ -12,13 +15,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
     private static final Logger log = (Logger) LoggerFactory.getLogger(User.class);
     @Autowired
     private UserRepositiory userRepository;
+    @Autowired
+    RoleRepository roleRepository;
     @Autowired
     PasswordEncoder encoder;
 
@@ -70,6 +78,59 @@ public class UserService {
             log.error("An error occurred while retrieving users: ", e);
             throw new Exception("An error occurred while retrieving users: " + e.getMessage());
         }
+    }
+
+    /* updating user by admin */
+    public UserResponse userUpdateAdmin(String id, UserRequest userRequest){
+        User existingUser = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User with id : " + id + " not found ! "));
+
+        existingUser.setUsername(userRequest.getUsername());
+        existingUser.setEmail(userRequest.getEmail());
+        existingUser.setPassword(encoder.encode(userRequest.getPassword()));
+        existingUser.setEmail(userRequest.getEmail());
+
+        Set<String> strRoles = userRequest.getRoles();
+        Set<Role> roles = new HashSet<>();
+
+        if (strRoles == null) {
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+                        break;
+
+                    case "provider":
+                        Role serviceProviderRole = roleRepository.findByName(ERole.ROLE_SERVICE_PROVIDER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(serviceProviderRole);
+                        break;
+
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
+        existingUser.setRoles(roles);
+
+        log.info("(admin) Updating User : " + existingUser.getUsername());
+        userRepository.save(existingUser);
+
+        UserResponse userResponse = new UserResponse();
+        userResponse.setId(existingUser.getId());
+        userResponse.setUsername(existingUser.getUsername());
+        userResponse.setEmail(existingUser.getEmail());
+        userResponse.setPassword(existingUser.getPassword());
+        userResponse.setRoles(Collections.singleton(existingUser.getRoles().toString()));
+
+        return userResponse;
     }
 
     /* get specific user using id */

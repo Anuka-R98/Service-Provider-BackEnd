@@ -24,7 +24,7 @@ public class UserController {
     private UserRepositiory userRepository;
 
     /* saving user */
-    @PostMapping("/users")
+    @PostMapping("admin/users")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addUser(@RequestBody UserRequest userRequest) {
         //The <?> is a wildcard that allows us to return any type of response entity.
@@ -58,28 +58,30 @@ public class UserController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
-//    @PutMapping("/users/{id}")
-//    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')  or hasRole('SERVICEP')")
-//    public ResponseEntity<?> adminUpdateUser(@PathVariable String id, @RequestBody UserRequest userRequest){
-//
-//        if (userRepository.existsByUsername(userRequest.getUsername())) {
-//            return ResponseEntity.badRequest().body("Error: Username is already taken!");
-//        }
-//        if (userRepository.existsByEmail(userRequest.getEmail())) {
-//            return ResponseEntity.badRequest().body("Error: Email is already in use!");
-//        }
-//
-//        try{
-//            UserResponse userResponse = service.updateUser(id, userRequest);
-//            return new ResponseEntity<>(userResponse, HttpStatus.OK);
-//        }catch(Exception e){
-//            log.error("Error updating user: ", e);
-//            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-//        }
-//    }
+
+    /* updating user by admin */
+    @PutMapping("admin/users/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> adminUpdateUser(@PathVariable String id, @RequestBody UserRequest userRequest){
+
+        if (userRepository.existsByUsername(userRequest.getUsername())) {
+            return ResponseEntity.badRequest().body("Error: Username is already taken!");
+        }
+        if (userRepository.existsByEmail(userRequest.getEmail())) {
+            return ResponseEntity.badRequest().body("Error: Email is already in use!");
+        }
+
+        try{
+            UserResponse userResponse = service.userUpdateAdmin(id, userRequest);
+            return new ResponseEntity<>(userResponse, HttpStatus.OK);
+        }catch(Exception e){
+            log.error("Error updating user: ", e);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
 
     /* get users */
-    @GetMapping("/users")
+    @GetMapping("admin/users")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<User>> getUser() {
         try {
@@ -93,7 +95,7 @@ public class UserController {
     }
 
     /* get user by id */
-    @GetMapping("/users/{id}")
+    @GetMapping("admin/users/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> findUserById(@PathVariable String id){
         try{
@@ -106,7 +108,7 @@ public class UserController {
     }
 
     /* get user by name */
-    @GetMapping("/users/{name}")
+    @GetMapping("admin/users/{name}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> findUserByName(@PathVariable String name){
         try{
@@ -119,7 +121,7 @@ public class UserController {
     }
 
     /* delete user by id */
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("admin/users/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteStudent(@PathVariable String id){
         try{
