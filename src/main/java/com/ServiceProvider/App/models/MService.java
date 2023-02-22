@@ -9,12 +9,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document(collection = "services")
-public class Service {
+public class MService {
     @Id
     private String id;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 50)
     private String service_name;
 
     @NotBlank

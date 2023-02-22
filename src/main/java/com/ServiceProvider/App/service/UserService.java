@@ -26,9 +26,9 @@ public class UserService {
     @Autowired
     private UserRepositiory userRepository;
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     @Autowired
-    PasswordEncoder encoder;
+    private PasswordEncoder encoder;
 
     /* saving user */
     public UserResponse saveUser(UserRequest userRequest){

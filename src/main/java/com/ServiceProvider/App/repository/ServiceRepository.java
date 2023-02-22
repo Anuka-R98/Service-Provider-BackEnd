@@ -1,8 +1,15 @@
 package com.ServiceProvider.App.repository;
 
-import com.ServiceProvider.App.models.Service;
+import com.ServiceProvider.App.models.MService;
+import com.ServiceProvider.App.models.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ServiceRepository extends MongoRepository<Service, String> {
+import java.util.Optional;
+
+public interface ServiceRepository extends MongoRepository<MService, String> {
+
+//    Optional<User> findByServiceName(String service_name);
+//
+//    Boolean existsByServiceName(String service_name);
 
 }
