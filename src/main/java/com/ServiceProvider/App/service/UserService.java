@@ -157,7 +157,7 @@ public class UserService {
 
     /* delete user by id */
     public String deleteUser(String id) throws Exception {
-        log.info("Deleting user with idL " + id);
+        log.info("Deleting user with id " + id);
         try{
             userRepository.deleteById(id);
             return "User : " + id + " deleted successfully";

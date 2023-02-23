@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface ServiceRepository extends MongoRepository<MService, String> {
 
-//    Optional<User> findByServiceName(String service_name);
-//
+    Optional<MService> findByServiceName(String service_name);
+
 //    Boolean existsByServiceName(String service_name);
 
 }

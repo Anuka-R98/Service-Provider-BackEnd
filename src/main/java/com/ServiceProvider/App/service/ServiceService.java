@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 
 @Service
 public class ServiceService {
@@ -53,5 +55,50 @@ public class ServiceService {
         serviceResponse.setDescription(existingService.getDescription());
 
         return serviceResponse;
+    }
+
+    /* get all services */
+    public List<MService> getServices() throws Exception {
+        log.info("Getting all services");
+        try {
+            return serviceRepository.findAll();
+        } catch (Exception e) {
+            log.error("An error occurred while retrieving services: ", e);
+            throw new Exception("An error occurred while retrieving services: " + e.getMessage());
+        }
+    }
+
+    /* retrieve specific service using service id */
+    public MService getServiceById(String id) throws Exception {
+        log.info("Getting service with id: {}" + id);
+        try {
+            return serviceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Service not found with id:" + id));
+        } catch(Exception e) {
+            log.error("An error occurred while retrieving the requested service", e);
+            throw new Exception("An error occurred while retrieving the requested service" + e.getMessage());
+        }
+    }
+
+    /* get specific service using name */
+    public MService getServiceByName(String name) throws Exception {
+        log.info("Getting service with id: {}" + name);
+        try {
+            return serviceRepository.findByServiceName(name).orElseThrow(() -> new ResourceNotFoundException("Service not found with service name:" + name));
+        } catch(Exception e) {
+            log.error("An error occurred while retrieving the requested service", e);
+            throw new Exception("An error occurred while retrieving the requested service" + e.getMessage());
+        }
+    }
+
+    /* delete a service */
+    public String deleteService(String id) throws Exception {
+        log.info("Deleting service with id " + id);
+        try{
+            serviceRepository.deleteById(id);
+            return "User : " + id + " deleted successfully";
+        } catch(Exception e) {
+            log.error("An error occurred while deleting the requested service", e);
+            throw new Exception("An error occurred while deleting the requested service" + e.getMessage());
+        }
     }
 }
