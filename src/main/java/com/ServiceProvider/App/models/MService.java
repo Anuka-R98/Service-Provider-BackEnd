@@ -15,11 +15,19 @@ public class MService {
 
     @NotBlank
     @Size(max = 50)
-    private String service_name;
+    private String name;
 
     @NotBlank
     @Size(max = 500)
     @Email
     private String description;
 
+//    public MService() {
+//    }
+//
+//    public MService(String id, String service_name, String description) {
+//        this.id = id;
+//        this.service_name = service_name;
+//        this.description = description;
+//    }
 }

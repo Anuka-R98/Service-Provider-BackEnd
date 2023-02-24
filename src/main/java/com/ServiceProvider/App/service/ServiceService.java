@@ -25,15 +25,15 @@ public class ServiceService {
     public ServiceResponse createService(ServiceRequest serviceRequest){
         /* creating a new service object */
         MService service = new MService();
-        service.setService_name(serviceRequest.getService_name());
+        service.setName(serviceRequest.getName());
         service.setDescription(serviceRequest.getDescription());
 
-        log.info("Creating new service : " + service.getService_name());
+        log.info("Creating new service : " + service.getName());
         serviceRepository.save(service);
 
         ServiceResponse serviceResponse = new ServiceResponse();
         serviceResponse.setId(service.getId());
-        serviceResponse.setService_name(service.getService_name());
+        serviceResponse.setName(service.getName());
         serviceResponse.setDescription(service.getDescription());
 
         return serviceResponse;
@@ -43,15 +43,15 @@ public class ServiceService {
     public ServiceResponse updateService(String id, ServiceRequest serviceRequest){
         MService existingService = serviceRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Service with id : " + id + " not found ! "));
 
-        existingService.setService_name(serviceRequest.getService_name());
+        existingService.setName(serviceRequest.getName());
         existingService.setDescription(serviceRequest.getDescription());
 
-        log.info("Updating Service details of : " + existingService.getService_name());
+        log.info("Updating Service details of : " + existingService.getName());
         serviceRepository.save(existingService);
 
         ServiceResponse serviceResponse = new ServiceResponse();
         serviceResponse.setId(existingService.getId());
-        serviceResponse.setService_name(existingService.getService_name());
+        serviceResponse.setName(existingService.getName());
         serviceResponse.setDescription(existingService.getDescription());
 
         return serviceResponse;
@@ -68,7 +68,7 @@ public class ServiceService {
         }
     }
 
-    /* retrieve specific service using service id */
+    /* get specific service using service id */
     public MService getServiceById(String id) throws Exception {
         log.info("Getting service with id: {}" + id);
         try {
@@ -83,7 +83,7 @@ public class ServiceService {
     public MService getServiceByName(String name) throws Exception {
         log.info("Getting service with id: {}" + name);
         try {
-            return serviceRepository.findByServiceName(name).orElseThrow(() -> new ResourceNotFoundException("Service not found with service name:" + name));
+            return serviceRepository.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Service not found with service name:" + name));
         } catch(Exception e) {
             log.error("An error occurred while retrieving the requested service", e);
             throw new Exception("An error occurred while retrieving the requested service" + e.getMessage());

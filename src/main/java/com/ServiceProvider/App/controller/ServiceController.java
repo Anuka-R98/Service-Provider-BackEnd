@@ -1,10 +1,8 @@
 package com.ServiceProvider.App.controller;
 
 import com.ServiceProvider.App.models.MService;
-import com.ServiceProvider.App.models.User;
 import com.ServiceProvider.App.payload.requests.ServiceRequest;
 import com.ServiceProvider.App.payload.responses.ServiceResponse;
-import com.ServiceProvider.App.repository.ServiceRepository;
 import com.ServiceProvider.App.service.ServiceService;
 
 import org.slf4j.Logger;
@@ -19,9 +17,8 @@ import java.util.List;
 
 @RestController
 public class ServiceController {
-    private static final Logger log = (Logger) LoggerFactory.getLogger(User.class);
-    @Autowired
-    private ServiceRepository serviceRepository;
+    private static final Logger log = (Logger) LoggerFactory.getLogger(MService.class);
+
     @Autowired
     private ServiceService service;
 
@@ -72,8 +69,8 @@ public class ServiceController {
     }
 
     /* get service by id */
-    @GetMapping("home/services/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("home/services/id/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or ('USER')")
     public ResponseEntity<MService> findServiceById(@PathVariable String id){
         try{
             MService service1 = service.getServiceById(id);
@@ -85,14 +82,27 @@ public class ServiceController {
     }
 
     /* get service by name */
-    @GetMapping("home/services/{name}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("home/services/name/{name}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or ('USER')")
     public ResponseEntity<MService> findServiceByName(@PathVariable String name){
         try{
             MService service2 = service.getServiceByName(name);
             return new ResponseEntity<>(service2, HttpStatus.OK);
         }catch(Exception e){
             log.error("Error getting service: ", e);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /* delete service by id */
+    @DeleteMapping("home/services/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP')")
+    public ResponseEntity<String> deleteService(@PathVariable String id){
+        try{
+            String response = service.deleteService(id);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            log.error("Error deleting service: ", e);
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }

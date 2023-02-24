@@ -95,7 +95,7 @@ public class UserController {
     }
 
     /* get user by id */
-    @GetMapping("admin/users/{id}")
+    @GetMapping("admin/users/id/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> findUserById(@PathVariable String id){
         try{
@@ -108,7 +108,7 @@ public class UserController {
     }
 
     /* get user by name */
-    @GetMapping("admin/users/{name}")
+    @GetMapping("admin/users/name/{name}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> findUserByName(@PathVariable String name){
         try{
@@ -123,7 +123,7 @@ public class UserController {
     /* delete user by id */
     @DeleteMapping("admin/users/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> deleteStudent(@PathVariable String id){
+    public ResponseEntity<String> deleteUser(@PathVariable String id){
         try{
             String response = service.deleteUser(id);
             return new ResponseEntity<>(response, HttpStatus.OK);
