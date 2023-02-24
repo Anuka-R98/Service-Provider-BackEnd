@@ -5,7 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 @Data
 @Document(collection = "services")
@@ -22,12 +25,6 @@ public class MService {
     @Email
     private String description;
 
-//    public MService() {
-//    }
-//
-//    public MService(String id, String service_name, String description) {
-//        this.id = id;
-//        this.service_name = service_name;
-//        this.description = description;
-//    }
+//    @DBRef
+    private List<Rating> ratings;
 }

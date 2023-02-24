@@ -1,7 +1,7 @@
 package com.ServiceProvider.App.controller;
 
 import com.ServiceProvider.App.repository.RoleRepository;
-import com.ServiceProvider.App.repository.UserRepositiory;
+import com.ServiceProvider.App.repository.UserRepository;
 import com.ServiceProvider.App.models.ERole;
 import com.ServiceProvider.App.models.Role;
 import com.ServiceProvider.App.models.User;
@@ -41,7 +41,7 @@ public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
-    UserRepositiory userRepository;
+    UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
     @Autowired

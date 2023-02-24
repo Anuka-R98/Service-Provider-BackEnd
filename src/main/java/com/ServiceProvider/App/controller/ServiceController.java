@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+//@RequestMapping("home/services")
 public class ServiceController {
     private static final Logger log = (Logger) LoggerFactory.getLogger(MService.class);
 
@@ -44,7 +45,7 @@ public class ServiceController {
             return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
         }catch(Exception e){
             log.error("Error updating service info: ", e);
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Service update failed", HttpStatus.NOT_FOUND);
         }
     }
 

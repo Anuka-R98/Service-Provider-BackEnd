@@ -7,7 +7,7 @@ import com.ServiceProvider.App.models.User;
 import com.ServiceProvider.App.payload.requests.UserRequest;
 import com.ServiceProvider.App.payload.responses.UserResponse;
 import com.ServiceProvider.App.repository.RoleRepository;
-import com.ServiceProvider.App.repository.UserRepositiory;
+import com.ServiceProvider.App.repository.UserRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ import java.util.Set;
 public class UserService {
     private static final Logger log = (Logger) LoggerFactory.getLogger(User.class);
     @Autowired
-    private UserRepositiory userRepository;
+    private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
     @Autowired

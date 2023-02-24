@@ -13,11 +13,13 @@ import java.util.Set;
 @Document(collection = "ratings")
 public class Rating {
     @Id
-    private String rating_id;
-
-    @DBRef
-    private Set<User> rating_user_nam = new HashSet<>();
-
+    private String id;
     @NotBlank
-    private double rating_value;
+    private int rating;
+    private String comment;
+    @DBRef
+    private User user;
+    @DBRef
+    private MService service;
+
 }

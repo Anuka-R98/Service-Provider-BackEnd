@@ -2,7 +2,7 @@ package com.ServiceProvider.App.controller;
 import com.ServiceProvider.App.models.User;
 import com.ServiceProvider.App.payload.requests.UserRequest;
 import com.ServiceProvider.App.payload.responses.UserResponse;
-import com.ServiceProvider.App.repository.UserRepositiory;
+import com.ServiceProvider.App.repository.UserRepository;
 import com.ServiceProvider.App.service.UserService;
 
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     private UserService service;
     @Autowired
-    private UserRepositiory userRepository;
+    private UserRepository userRepository;
 
     /* saving user */
     @PostMapping("admin/users")
