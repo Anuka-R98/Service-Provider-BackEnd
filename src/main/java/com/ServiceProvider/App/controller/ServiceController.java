@@ -39,13 +39,6 @@ public class ServiceController {
     @PutMapping("home/services/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP')")
     public ResponseEntity<?> updateService(@PathVariable String id, @RequestBody ServiceRequest serviceRequest){
-
-//        if (serviceRepository.existsBySerName(serviceRequest.getService_name())) {
-//            return ResponseEntity.badRequest().body("Error: Username is already taken!");
-//        }
-//        if (serviceRepository.existsByDes(serviceRequest.getDescription())) {
-//            return ResponseEntity.badRequest().body("Error: Email is already in use!");
-//        }
         try{
             ServiceResponse serviceResponse = service.updateService(id, serviceRequest);
             return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
