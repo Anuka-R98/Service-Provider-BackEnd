@@ -23,13 +23,26 @@ public class RatingController {
 
     /* creating a rating */
     @PostMapping("home/services/ratings")
-    @PreAuthorize("hasRole('ADMIN') or ('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<RatingResponse> addRating(@RequestHeader("userId") String userId, @RequestBody RatingRequest ratingRequest) {
         try {
             RatingResponse ratingResponse = ratingService.addRating(userId, ratingRequest);
             return new ResponseEntity<>(ratingResponse, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error adding rating: ", e);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /* get all ratings for a specific service */
+    @GetMapping("home/services/ratings/{serviceId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or hasRole('USER')")
+    public ResponseEntity<RatingResponse> getRating(@PathVariable String serviceId, @RequestBody RatingRequest ratingRequest) {
+        try {
+            RatingResponse ratingResponse = (RatingResponse) ratingService.getRatingsByServiceId(serviceId);
+            return new ResponseEntity<>(ratingResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error getting ratings: ", e);
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }

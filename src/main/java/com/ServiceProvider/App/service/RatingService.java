@@ -21,10 +21,8 @@ public class RatingService {
     private static final Logger log = (Logger) LoggerFactory.getLogger(Rating.class);
     @Autowired
     private RatingRepository ratingRepository;
-
     @Autowired
     private ServiceRepository serviceRepository;
-
     @Autowired
     private UserService userService;
     @Autowired
@@ -60,9 +58,19 @@ public class RatingService {
         } catch(Exception e) {
             throw new Exception("An error occurred while saving the rating.", e);
         }
-
     }
+
+    /* get all ratings for a specific service */
+    public List<Rating> getRatingsByServiceId(String serviceId) throws Exception {
+        try{
+            MService service = serviceService.getServiceById(serviceId);
+            return ratingRepository.findByService(service);
+        }catch(Exception e) {
+            throw new Exception("An error getting ratings for services.", e);
+        }
+    }
+
+        
  }
-//    public List<Rating> getRatingsByServiceId(String serviceId) {
-//        MService service = serviceService.getServiceById(serviceId);
-//        return ratingRepository.findByService(service);
+
+
