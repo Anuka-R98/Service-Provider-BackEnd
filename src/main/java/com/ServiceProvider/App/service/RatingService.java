@@ -60,17 +60,29 @@ public class RatingService {
         }
     }
 
+    /* get all ratings */
+    public List<Rating> getRatings() throws Exception {
+        try{
+            log.info("retrieving ratings: ");
+            return ratingRepository.findAll();
+        }catch(Exception e) {
+            log.error("An error occurred while retrieving ratings: ", e);
+            throw new Exception("An error occurred while retrieving ratings" + e.getMessage());
+        }
+    }
+
     /* get all ratings for a specific service */
     public List<Rating> getRatingsByServiceId(String serviceId) throws Exception {
         try{
             MService service = serviceService.getServiceById(serviceId);
+            log.info("retrieving ratings for service: " + service.getName());
             return ratingRepository.findByService(service);
         }catch(Exception e) {
             throw new Exception("An error getting ratings for services.", e);
         }
     }
 
-        
+
  }
 
 

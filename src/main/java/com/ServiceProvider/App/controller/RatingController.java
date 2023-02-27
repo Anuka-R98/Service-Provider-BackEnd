@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 //@RequestMapping("home/ratings")
 public class RatingController {
@@ -34,18 +36,32 @@ public class RatingController {
         }
     }
 
-    /* get all ratings for a specific service */
-    @GetMapping("home/services/ratings/{serviceId}")
+    /* get all ratings */
+    @GetMapping("home/services/ratings")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or hasRole('USER')")
-    public ResponseEntity<RatingResponse> getRating(@PathVariable String serviceId, @RequestBody RatingRequest ratingRequest) {
+    public ResponseEntity<List<Rating>> getRatings() {
         try {
-            RatingResponse ratingResponse = (RatingResponse) ratingService.getRatingsByServiceId(serviceId);
-            return new ResponseEntity<>(ratingResponse, HttpStatus.OK);
+            List<Rating> ratings = ratingService.getRatings();
+            return new ResponseEntity<>(ratings, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error getting ratings: ", e);
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
+    /* get all ratings for a specific service */
+    @GetMapping("home/services/ratings/{serviceId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or hasRole('USER')")
+    public ResponseEntity<List<Rating>> getRatingsInService(@PathVariable String serviceId) {
+        try {
+            List<Rating> ratings = ratingService.getRatingsByServiceId(serviceId);
+            return new ResponseEntity<>(ratings, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error getting ratings: ", e);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 }
 
