@@ -2,7 +2,9 @@ package com.ServiceProvider.App.controller;
 
 import com.ServiceProvider.App.models.Rating;
 import com.ServiceProvider.App.payload.requests.RatingRequest;
+import com.ServiceProvider.App.payload.requests.ServiceRequest;
 import com.ServiceProvider.App.payload.responses.RatingResponse;
+import com.ServiceProvider.App.payload.responses.ServiceResponse;
 import com.ServiceProvider.App.service.RatingService;
 
 import org.slf4j.Logger;
@@ -62,6 +64,31 @@ public class RatingController {
         }
     }
 
+    /* updating rating details */
+    @PutMapping("home/services/ratings/{ratingId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public ResponseEntity<?> updateRating(@RequestHeader("userId") String userId, @PathVariable String ratingId, @RequestBody RatingRequest ratingRequest){
+        try{
+            RatingResponse ratingResponse = ratingService.updateRating(userId, ratingId, ratingRequest);
+            return new ResponseEntity<>(ratingResponse, HttpStatus.OK);
+        }catch(Exception e){
+            log.error("Error updating rating info: ", e);
+            return new ResponseEntity<>("Rating update failed", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /* delete a rating by id */
+    @DeleteMapping("home/services/ratings/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> deleteService(@PathVariable String id){
+        try{
+            String response = ratingService.deleteRating(id);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            log.error("Error deleting rating: ", e);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
 
 }
 
