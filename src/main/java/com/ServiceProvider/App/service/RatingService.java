@@ -127,7 +127,7 @@ public class RatingService {
 
         User existingUser = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User with id : " + userId + " not found ! "));
         Rating existingRating = ratingRepository.findById(ratingId).orElseThrow(()-> new ResourceNotFoundException("Rating with id : " + ratingId + " not found ! "));
-//        MService service = serviceService.getServiceById(ratingRequest.getServiceId());
+        MService service = serviceService.getServiceById(existingRating.getService().getId());
 
         if(Objects.equals(existingRating.getUser().getId(), existingUser.getId())){
 
@@ -138,11 +138,11 @@ public class RatingService {
             log.info("Updating rating details for service name : " + existingRating.getService().getName());
 
             // Update the service's average rating
-//            List<Rating> ratings = ratingRepository.findByServiceId(existingRating.getService().getId());
-//            service.setRatings(ratings);
-//
-//            serviceRepository.save(service);
-//            ratingRepository.save(existingRating);
+            List<Rating> ratings = ratingRepository.findByServiceId(existingRating.getService().getId());
+            service.setRatings(ratings);
+
+            serviceRepository.save(service);
+            ratingRepository.save(existingRating);
 
             RatingResponse ratingResponse = new RatingResponse();
             ratingResponse.setId(existingRating.getId());
