@@ -10,7 +10,7 @@ public class RatingRequest {
 
     private String id;
     private String serviceId;
-    private int rating;
+    private double rating;
     private String comment;
     private String userId;
 

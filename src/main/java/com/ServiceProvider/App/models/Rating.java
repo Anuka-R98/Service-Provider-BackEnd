@@ -15,7 +15,8 @@ public class Rating {
     @Id
     private String id;
     @NotBlank
-    private int rating;
+    private double rating;
+    @NotBlank
     private String comment;
     @DBRef
     private User user;

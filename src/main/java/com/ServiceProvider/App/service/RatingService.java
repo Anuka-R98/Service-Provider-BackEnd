@@ -53,9 +53,21 @@ public class RatingService {
             rating.setUser(user);
             rating.setService(service);
 
+//            // Add the new rating to the list of ratings for the service
+//            List<Rating> ratings = service.getRatings();
+//            ratings.add(rating);
+//            service.setRatings(ratings);
+//            service.calculateAverageRating(ratings);
+
+
+            // Update the service's average rating
+            List<Rating> ratings = ratingRepository.findByServiceId(rating.getService().getId());
+            service.setRatings(ratings);
+            serviceRepository.save(service);
             ratingRepository.save(rating);
+
+//            serviceRepository.save(service);
             log.info("Rating is added to service: " + service.getName() + " / By user: " + user.getUsername());
-            log.info("Rating value: " + rating.getRating());
 
             RatingResponse ratingResponse = new RatingResponse();
             ratingResponse.setId(rating.getId());
@@ -111,10 +123,11 @@ public class RatingService {
     }
 
     /* updating rating details */
-    public RatingResponse updateRating(String userId, String ratingId, RatingRequest ratingRequest){
+    public RatingResponse updateRating(String userId, String ratingId, RatingRequest ratingRequest) throws Exception {
 
         User existingUser = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User with id : " + userId + " not found ! "));
         Rating existingRating = ratingRepository.findById(ratingId).orElseThrow(()-> new ResourceNotFoundException("Rating with id : " + ratingId + " not found ! "));
+//        MService service = serviceService.getServiceById(ratingRequest.getServiceId());
 
         if(Objects.equals(existingRating.getUser().getId(), existingUser.getId())){
 
@@ -123,7 +136,13 @@ public class RatingService {
             existingRating.setComment(ratingRequest.getComment());
 
             log.info("Updating rating details for service name : " + existingRating.getService().getName());
-            ratingRepository.save(existingRating);
+
+            // Update the service's average rating
+//            List<Rating> ratings = ratingRepository.findByServiceId(existingRating.getService().getId());
+//            service.setRatings(ratings);
+//
+//            serviceRepository.save(service);
+//            ratingRepository.save(existingRating);
 
             RatingResponse ratingResponse = new RatingResponse();
             ratingResponse.setId(existingRating.getId());
@@ -152,6 +171,7 @@ public class RatingService {
             throw new Exception("An error occurred while deleting the requested rating" + e.getMessage());
         }
     }
+
 
  }
 
