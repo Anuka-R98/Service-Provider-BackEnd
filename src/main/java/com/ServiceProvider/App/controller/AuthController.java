@@ -1,5 +1,6 @@
 package com.ServiceProvider.App.controller;
 
+import com.ServiceProvider.App.payload.responses.UserResponse;
 import com.ServiceProvider.App.repository.RoleRepository;
 import com.ServiceProvider.App.repository.UserRepository;
 import com.ServiceProvider.App.models.ERole;
@@ -126,6 +127,8 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok("User registered successfully!");
+//        return ResponseEntity.ok("User registered successfully!");
+        UserResponse userResponse = new UserResponse(user.getUsername(), user.getEmail(), user.getRoles());
+        return ResponseEntity.ok(userResponse);
     }
 }

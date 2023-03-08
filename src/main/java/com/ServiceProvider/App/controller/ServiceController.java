@@ -51,7 +51,7 @@ public class ServiceController {
 
     /* get all services */
     @GetMapping("home/services")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or ('USER')")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or ('USER')")
     public ResponseEntity<List<MService>> getServices() {
         try {
             List<MService> services = service.getServices();
