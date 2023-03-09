@@ -129,8 +129,12 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-//        return ResponseEntity.ok("User registered successfully!");
-        UserResponse userResponse = new UserResponse(user.getUsername(), user.getEmail(), user.getRoles(), user.getPhoneNo());
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.ok(new JwtResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getPhoneNo()));
+
+//        return ResponseEntity.ok(userResponse);
     }
 }
