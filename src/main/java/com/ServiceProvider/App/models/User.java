@@ -33,6 +33,10 @@ public class User {
     @Size(max = 120)
     private String password;
 
+    @NotBlank
+    @Size(max = 10)
+    private String phoneNo;
+
     @DBRef
     private Set<Role> roles = new HashSet<>();
 //    @DBRef
@@ -40,15 +44,18 @@ public class User {
 
     public User() {
     }
-    public User(String username, String email, String password, Set<Role> roles) {
+    public User(String username, String email, String password, Set<Role> roles, String phoneNo) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.roles = roles;
+        this.phoneNo = phoneNo;
     }
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, String phoneNo) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.phoneNo = phoneNo;
     }
+
 }

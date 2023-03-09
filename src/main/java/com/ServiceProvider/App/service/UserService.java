@@ -36,6 +36,7 @@ public class UserService {
         user.setUsername(userRequest.getUsername());
         user.setEmail(userRequest.getEmail());
         user.setPassword(userRequest.getPassword());
+        user.setPhoneNo(userRequest.getPhoneNo());
 
         log.info("Saving User : " + user.getUsername());
         userRepository.save(user);
@@ -45,6 +46,7 @@ public class UserService {
         userResponse.setUsername(user.getUsername());
         userResponse.setEmail(user.getEmail());
         userResponse.setPassword(user.getPassword());
+        userResponse.setPhoneNo(user.getPhoneNo());
 
         return userResponse;
     }
@@ -56,6 +58,7 @@ public class UserService {
         existingUser.setUsername(userRequest.getUsername());
         existingUser.setEmail(userRequest.getEmail());
         existingUser.setPassword(encoder.encode(userRequest.getPassword()));
+        existingUser.setPhoneNo(userRequest.getPhoneNo());
 
         log.info("Updating User : " + existingUser.getUsername());
         userRepository.save(existingUser);
@@ -65,6 +68,7 @@ public class UserService {
         userResponse.setUsername(existingUser.getUsername());
         userResponse.setEmail(existingUser.getEmail());
         userResponse.setPassword(existingUser.getPassword());
+        userResponse.setPhoneNo(existingUser.getPhoneNo());
 
         return userResponse;
     }
@@ -87,7 +91,7 @@ public class UserService {
         existingUser.setUsername(userRequest.getUsername());
         existingUser.setEmail(userRequest.getEmail());
         existingUser.setPassword(encoder.encode(userRequest.getPassword()));
-        existingUser.setEmail(userRequest.getEmail());
+        existingUser.setPhoneNo(userRequest.getPhoneNo());
 
         Set<String> strRoles = userRequest.getRoles();
         Set<Role> roles = new HashSet<>();
@@ -128,6 +132,7 @@ public class UserService {
         userResponse.setUsername(existingUser.getUsername());
         userResponse.setEmail(existingUser.getEmail());
         userResponse.setPassword(existingUser.getPassword());
+        userResponse.setPhoneNo(existingUser.getPhoneNo());
         userResponse.setRoles(Collections.singleton(existingUser.getRoles().toString()));
 
         return userResponse;

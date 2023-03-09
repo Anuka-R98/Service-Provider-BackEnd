@@ -68,6 +68,7 @@ public class AuthController {
                     userDetails.getId(),
                     userDetails.getUsername(),
                     userDetails.getEmail(),
+                    userDetails.getPhoneNo(),
                     roles));
 
             }catch(AuthenticationException e){
@@ -91,8 +92,9 @@ public class AuthController {
 
         // Create new user's account
         User user = new User(signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+                             signUpRequest.getEmail(),
+                             encoder.encode(signUpRequest.getPassword()),
+                             signUpRequest.getPhoneNo());
 
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
@@ -128,7 +130,7 @@ public class AuthController {
         userRepository.save(user);
 
 //        return ResponseEntity.ok("User registered successfully!");
-        UserResponse userResponse = new UserResponse(user.getUsername(), user.getEmail(), user.getRoles());
+        UserResponse userResponse = new UserResponse(user.getUsername(), user.getEmail(), user.getRoles(), user.getPhoneNo());
         return ResponseEntity.ok(userResponse);
     }
 }

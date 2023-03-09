@@ -13,11 +13,12 @@ public class UserResponse {
     private String email;
     private String password;
     private Set<String> roles;
+    private String phoneNo;
 
     public UserResponse() {
     }
-
     /* Used in sign up */
-    public UserResponse(String username, String email, Set<Role> roles) {
+    public UserResponse(String username, String email, Set<Role> roles, String phoneNo) {
     }
+
 }

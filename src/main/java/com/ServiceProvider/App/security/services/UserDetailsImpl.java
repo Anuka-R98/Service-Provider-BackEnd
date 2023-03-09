@@ -19,16 +19,18 @@ public class UserDetailsImpl implements UserDetails {
     private String id;
     private String username;
     private String email;
+    private String phoneNo;
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(String id, String username, String email, String password,
+    public UserDetailsImpl(String id, String username, String email, String password, String phoneNo,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.phoneNo = phoneNo;
         this.authorities = authorities;
     }
     public static UserDetailsImpl build(User user) {
@@ -41,6 +43,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getPhoneNo(),
                 authorities);
     }
     @Override
@@ -53,12 +56,11 @@ public class UserDetailsImpl implements UserDetails {
     public String getEmail() {
         return email;
     }
-
+    public String getPhoneNo() { return phoneNo; }
     @Override
     public String getPassword() {
         return password;
     }
-
     @Override
     public String getUsername() {
         return username;
@@ -75,7 +77,6 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
     @Override
     public boolean isEnabled() {
         return true;
