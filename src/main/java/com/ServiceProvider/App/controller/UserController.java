@@ -40,7 +40,7 @@ public class UserController {
 
     /* updating user */
     @PutMapping("/users/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')  or hasRole('SERVICEP')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')  or hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody UserRequest userRequest){
 
         if (userRepository.existsByUsername(userRequest.getUsername())) {

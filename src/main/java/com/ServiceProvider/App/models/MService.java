@@ -1,5 +1,6 @@
 package com.ServiceProvider.App.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Data
 @Document(collection = "services")
+@JsonIgnoreProperties({"ratings"})
 public class MService {
     @Id
     private String id;
