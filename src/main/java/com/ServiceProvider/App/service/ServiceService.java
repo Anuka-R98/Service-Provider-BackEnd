@@ -27,6 +27,7 @@ public class ServiceService {
         MService service = new MService();
         service.setName(serviceRequest.getName());
         service.setDescription(serviceRequest.getDescription());
+        service.setPhoneNo(serviceRequest.getPhoneNo());
 
         log.info("Creating new service : " + service.getName());
         serviceRepository.save(service);
@@ -35,6 +36,29 @@ public class ServiceService {
         serviceResponse.setId(service.getId());
         serviceResponse.setName(service.getName());
         serviceResponse.setDescription(service.getDescription());
+        serviceResponse.setPhoneNo(service.getPhoneNo());
+
+        return serviceResponse;
+    }
+
+    /* updating service details by admin*/
+    public ServiceResponse updateServiceByAdmin(String id, ServiceRequest serviceRequest){
+        MService existingService = serviceRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Service with id : " + id + " not found ! "));
+
+        existingService.setName(serviceRequest.getName());
+        existingService.setDescription(serviceRequest.getDescription());
+        existingService.setPhoneNo(serviceRequest.getPhoneNo());
+        existingService.setAverageRating(serviceRequest.getAverageRating());
+
+        log.info("Updating Service details of : " + existingService.getName());
+        serviceRepository.save(existingService);
+
+        ServiceResponse serviceResponse = new ServiceResponse();
+        serviceResponse.setId(existingService.getId());
+        serviceResponse.setName(existingService.getName());
+        serviceResponse.setDescription(existingService.getDescription());
+        serviceResponse.setPhoneNo(existingService.getPhoneNo());
+        serviceResponse.setAverageRating(existingService.getAverageRating());
 
         return serviceResponse;
     }
@@ -45,6 +69,7 @@ public class ServiceService {
 
         existingService.setName(serviceRequest.getName());
         existingService.setDescription(serviceRequest.getDescription());
+        existingService.setPhoneNo(serviceRequest.getPhoneNo());
 
         log.info("Updating Service details of : " + existingService.getName());
         serviceRepository.save(existingService);
@@ -53,6 +78,7 @@ public class ServiceService {
         serviceResponse.setId(existingService.getId());
         serviceResponse.setName(existingService.getName());
         serviceResponse.setDescription(existingService.getDescription());
+        serviceResponse.setPhoneNo(existingService.getPhoneNo());
 
         return serviceResponse;
     }

@@ -30,6 +30,10 @@ public class MService {
     @Email
     private String description;
 
+    @NotBlank
+    @Size(max = 10)
+    private String phoneNo;
+
     private List<Rating> ratings = new ArrayList<>();
     private double averageRating;
 

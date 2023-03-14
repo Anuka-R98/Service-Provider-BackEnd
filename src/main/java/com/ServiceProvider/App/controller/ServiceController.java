@@ -36,8 +36,21 @@ public class ServiceController {
         }
     }
 
+    /* updating service details ny admin */
+    @PutMapping("home/admin/services/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateServiceByAdmin(@PathVariable String id, @RequestBody ServiceRequest serviceRequest){
+        try{
+            ServiceResponse serviceResponse = service.updateServiceByAdmin(id, serviceRequest);
+            return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+        }catch(Exception e){
+            log.error("Error updating service info: ", e);
+            return new ResponseEntity<>("Service update failed", HttpStatus.NOT_FOUND);
+        }
+    }
+
     /* updating service details */
-    @PutMapping("home/services/{id}")
+    @PutMapping("home/provider/services/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<?> updateService(@PathVariable String id, @RequestBody ServiceRequest serviceRequest){
         try{
