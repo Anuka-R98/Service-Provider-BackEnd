@@ -25,7 +25,7 @@ public class ServiceController {
 
     /* create a new service */
     @PostMapping("home/services")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<?> addService(@RequestBody ServiceRequest serviceRequest) {
         try {
             ServiceResponse serviceResponse = service.createService(serviceRequest);
@@ -36,9 +36,22 @@ public class ServiceController {
         }
     }
 
+    /* updating service details ny admin */
+    @PutMapping("home/admin/services/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateServiceByAdmin(@PathVariable String id, @RequestBody ServiceRequest serviceRequest){
+        try{
+            ServiceResponse serviceResponse = service.updateServiceByAdmin(id, serviceRequest);
+            return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
+        }catch(Exception e){
+            log.error("Error updating service info: ", e);
+            return new ResponseEntity<>("Service update failed", HttpStatus.NOT_FOUND);
+        }
+    }
+
     /* updating service details */
-    @PutMapping("home/services/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP')")
+    @PutMapping("home/provider/services/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<?> updateService(@PathVariable String id, @RequestBody ServiceRequest serviceRequest){
         try{
             ServiceResponse serviceResponse = service.updateService(id, serviceRequest);
@@ -50,7 +63,7 @@ public class ServiceController {
     }
 
     /* get all services */
-    @GetMapping("home/services")
+    @GetMapping("home/services/all")
 //    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or ('USER')")
     public ResponseEntity<List<MService>> getServices() {
         try {
@@ -64,7 +77,7 @@ public class ServiceController {
 
     /* get service by id */
     @GetMapping("home/services/id/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or ('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICE_PROVIDER') or ('USER')")
     public ResponseEntity<MService> findServiceById(@PathVariable String id){
         try{
             MService service1 = service.getServiceById(id);
@@ -77,7 +90,7 @@ public class ServiceController {
 
     /* get service by name */
     @GetMapping("home/services/name/{name}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or ('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICE_PROVIDER') or ('USER')")
     public ResponseEntity<MService> findServiceByName(@PathVariable String name){
         try{
             MService service2 = service.getServiceByName(name);
@@ -90,7 +103,7 @@ public class ServiceController {
 
     /* delete service by id */
     @DeleteMapping("home/services/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<String> deleteService(@PathVariable String id){
         try{
             String response = service.deleteService(id);

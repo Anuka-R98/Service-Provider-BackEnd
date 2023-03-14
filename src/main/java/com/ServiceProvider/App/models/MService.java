@@ -1,5 +1,6 @@
 package com.ServiceProvider.App.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Data
 @Document(collection = "services")
+@JsonIgnoreProperties({"ratings"})
 public class MService {
     @Id
     private String id;
@@ -27,6 +29,10 @@ public class MService {
     @Size(max = 500)
     @Email
     private String description;
+
+    @NotBlank
+    @Size(max = 10)
+    private String phoneNo;
 
     private List<Rating> ratings = new ArrayList<>();
     private double averageRating;
