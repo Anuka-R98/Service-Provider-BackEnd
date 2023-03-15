@@ -37,6 +37,8 @@ public class MService {
     private List<Rating> ratings = new ArrayList<>();
     private double averageRating;
 
+    private String userId;
+
     public List<Rating> getRatings() {
         return ratings;
     }

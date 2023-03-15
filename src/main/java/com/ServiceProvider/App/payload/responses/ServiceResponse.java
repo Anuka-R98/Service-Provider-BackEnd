@@ -12,5 +12,6 @@ public class ServiceResponse {
     private String description;
     private String phoneNo;
     private double averageRating;
+    private String userId;
 
 }

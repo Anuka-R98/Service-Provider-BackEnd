@@ -26,9 +26,9 @@ public class ServiceController {
     /* create a new service */
     @PostMapping("home/services")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICE_PROVIDER')")
-    public ResponseEntity<?> addService(@RequestBody ServiceRequest serviceRequest) {
+    public ResponseEntity<?> addService(@RequestHeader("userId") String userId, @RequestBody ServiceRequest serviceRequest) {
         try {
-            ServiceResponse serviceResponse = service.createService(serviceRequest);
+            ServiceResponse serviceResponse = service.createService(userId, serviceRequest);
             return ResponseEntity.ok(serviceResponse);
         } catch (Exception e) {
             log.error("Error while creating service: ", e);
@@ -36,7 +36,7 @@ public class ServiceController {
         }
     }
 
-    /* updating service details ny admin */
+    /* updating service details by admin */
     @PutMapping("home/admin/services/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateServiceByAdmin(@PathVariable String id, @RequestBody ServiceRequest serviceRequest){
@@ -72,6 +72,19 @@ public class ServiceController {
         } catch (Exception e) {
             log.error("Error while retrieving services: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    /* get all service for a user */
+    @GetMapping("home/services/userid/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICE_PROVIDER')")
+    public ResponseEntity<List<MService>> getAllServicesByUser(@PathVariable String id){
+        try{
+            List<MService> services = service.getAllServicesByUser(id);
+            return new ResponseEntity<>(services, HttpStatus.OK);
+        }catch(Exception e){
+            log.error("Error getting service: ", e);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
