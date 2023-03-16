@@ -18,9 +18,9 @@ public class Rating {
     private double rating;
     @NotBlank
     private String comment;
-    @DBRef
-    private User user;
-    @DBRef
-    private MService service;
+    String userId;
+    String userName;
+    String serviceId;
+    String serviceName;
 
 }

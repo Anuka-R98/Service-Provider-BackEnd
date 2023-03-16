@@ -1,6 +1,5 @@
 package com.ServiceProvider.App.payload.requests;
 
-import com.ServiceProvider.App.models.User;
 import lombok.Data;
 
 import java.util.HashSet;
@@ -9,9 +8,9 @@ import java.util.Set;
 public class RatingRequest {
 
     private String id;
-    private String serviceId;
     private double rating;
     private String comment;
     private String userId;
+    private String serviceId;
 
 }

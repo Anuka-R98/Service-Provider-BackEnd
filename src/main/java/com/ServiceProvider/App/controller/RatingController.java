@@ -28,9 +28,9 @@ public class RatingController {
     /* creating a rating */
     @PostMapping("home/services/ratings")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public ResponseEntity<RatingResponse> addRating(@RequestHeader("userId") String userId, @RequestBody RatingRequest ratingRequest) {
+    public ResponseEntity<RatingResponse> addRating(@RequestHeader("userId") String userId, @RequestHeader("serviceId") String serviceId,  @RequestBody RatingRequest ratingRequest) {
         try {
-            RatingResponse ratingResponse = ratingService.addRating(userId, ratingRequest);
+            RatingResponse ratingResponse = ratingService.addRating(userId, serviceId, ratingRequest);
             return new ResponseEntity<>(ratingResponse, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error adding rating: ", e);
@@ -40,7 +40,7 @@ public class RatingController {
 
     /* get all ratings */
     @GetMapping("home/services/ratings")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICE_PROVIDER') or hasRole('USER')")
     public ResponseEntity<List<Rating>> getRatings() {
         try {
             List<Rating> ratings = ratingService.getRatings();
@@ -53,7 +53,7 @@ public class RatingController {
 
     /* get all ratings for a specific service */
     @GetMapping("home/services/ratings/{serviceId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICEP') or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICE_PROVIDER') or hasRole('USER')")
     public ResponseEntity<List<Rating>> getRatingsInService(@PathVariable String serviceId) {
         try {
             List<Rating> ratings = ratingService.getRatingsByServiceId(serviceId);

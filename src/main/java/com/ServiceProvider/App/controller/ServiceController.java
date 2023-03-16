@@ -75,7 +75,7 @@ public class ServiceController {
         }
     }
 
-    /* get all service for a user */
+    /* get all service for a user provider */
     @GetMapping("home/services/userid/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SERVICE_PROVIDER')")
     public ResponseEntity<List<MService>> getAllServicesByUser(@PathVariable String id){

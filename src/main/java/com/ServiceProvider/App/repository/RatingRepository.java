@@ -11,5 +11,5 @@ public interface RatingRepository extends MongoRepository<Rating, String> {
 
     List<Rating> findByUserId(String userId);
 
-    List<Rating> findByService(MService service);
+
 }
