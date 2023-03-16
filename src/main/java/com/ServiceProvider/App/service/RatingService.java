@@ -171,8 +171,6 @@ public class RatingService {
             throw new Exception("An error occurred while deleting the requested rating" + e.getMessage());
         }
     }
-
-
  }
 
 
