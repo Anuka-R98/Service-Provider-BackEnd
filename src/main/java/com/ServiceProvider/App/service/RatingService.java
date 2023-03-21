@@ -9,11 +9,6 @@ import com.ServiceProvider.App.payload.responses.RatingResponse;
 import com.ServiceProvider.App.repository.RatingRepository;
 import com.ServiceProvider.App.repository.ServiceRepository;
 import com.ServiceProvider.App.repository.UserRepository;
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +21,7 @@ import java.util.Optional;
 
 @Service
 public class RatingService {
-    private static final Logger log = (Logger) LoggerFactory.getLogger(Rating.class);
+    private static final Logger log = LoggerFactory.getLogger(Rating.class);
     @Autowired
     private RatingRepository ratingRepository;
     @Autowired
@@ -34,15 +29,9 @@ public class RatingService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private UserService userService;
-    @Autowired
     private ServiceService serviceService;
 
-//    // UserMixin class is created to filter out json properties in a response
-//    @JsonIgnoreProperties("roles")
-//    private static class UserMixin {}
-
-    /* create new service */
+    /* create new rating */
     public RatingResponse addRating(String userId, String serviceId, RatingRequest ratingRequest) throws Exception {
         try{
             /* check if user id is correct */
@@ -68,7 +57,6 @@ public class RatingService {
             List<Rating> ratings = ratingRepository.findByServiceId(rating.getServiceId());
             service.setRatings(ratings);
             serviceRepository.save(service);
-
 
             log.info("Rating is added to service: " + service.getName() + " / By user: " + user.getUsername());
 
@@ -132,13 +120,11 @@ public class RatingService {
             log.info("User matched with rating !");
             existingRating.setRating(ratingRequest.getRating());
             existingRating.setComment(ratingRequest.getComment());
-
             log.info("Updating rating details for service name : " + existingRating.getServiceName());
 
             // Update the service's average rating
             List<Rating> ratings = ratingRepository.findByServiceId(existingRating.getServiceId());
             service.setRatings(ratings);
-
             serviceRepository.save(service);
             ratingRepository.save(existingRating);
 

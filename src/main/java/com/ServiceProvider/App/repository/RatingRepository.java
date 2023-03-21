@@ -1,7 +1,6 @@
 package com.ServiceProvider.App.repository;
-
-import com.ServiceProvider.App.models.MService;
 import com.ServiceProvider.App.models.Rating;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

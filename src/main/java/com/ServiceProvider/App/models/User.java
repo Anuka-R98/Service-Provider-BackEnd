@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -39,23 +38,14 @@ public class User {
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
-//    @DBRef
-//    private List<Rating> ratings;
 
     public User() {
     }
-    public User(String username, String email, String password, Set<Role> roles, String phoneNo) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.phoneNo = phoneNo;
-    }
+
     public User(String username, String email, String password, String phoneNo) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.phoneNo = phoneNo;
     }
-
 }

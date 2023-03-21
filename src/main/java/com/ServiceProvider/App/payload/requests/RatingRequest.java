@@ -2,8 +2,6 @@ package com.ServiceProvider.App.payload.requests;
 
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
 @Data
 public class RatingRequest {
 

@@ -1,6 +1,5 @@
 package com.ServiceProvider.App.controller;
 
-import com.ServiceProvider.App.payload.responses.UserResponse;
 import com.ServiceProvider.App.repository.RoleRepository;
 import com.ServiceProvider.App.repository.UserRepository;
 import com.ServiceProvider.App.models.ERole;
@@ -28,13 +27,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//@CrossOrigin(origins = "*", maxAge = 3600)
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("api/auth")
@@ -135,6 +132,5 @@ public class AuthController {
                 user.getEmail(),
                 user.getPhoneNo()));
 
-//        return ResponseEntity.ok(userResponse);
     }
 }

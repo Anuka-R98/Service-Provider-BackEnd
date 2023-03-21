@@ -13,7 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-
 //@Service
 public class UserDetailsImpl implements UserDetails {
     private String id;

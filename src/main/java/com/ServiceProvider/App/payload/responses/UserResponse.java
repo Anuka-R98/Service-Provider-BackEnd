@@ -1,6 +1,5 @@
 package com.ServiceProvider.App.payload.responses;
 
-import com.ServiceProvider.App.models.Role;
 import lombok.Data;
 
 import java.util.Set;
@@ -16,9 +15,6 @@ public class UserResponse {
     private String phoneNo;
 
     public UserResponse() {
-    }
-    /* Used in sign up */
-    public UserResponse(String username, String email, Set<Role> roles, String phoneNo) {
     }
 
 }

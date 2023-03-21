@@ -1,5 +1,8 @@
 package com.ServiceProvider.App.payload.requests;
 
+import lombok.Data;
+
+@Data
 public class LoginRequest {
 
     private String username;
@@ -18,7 +21,4 @@ public class LoginRequest {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

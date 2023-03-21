@@ -2,9 +2,7 @@ package com.ServiceProvider.App.controller;
 
 import com.ServiceProvider.App.models.Rating;
 import com.ServiceProvider.App.payload.requests.RatingRequest;
-import com.ServiceProvider.App.payload.requests.ServiceRequest;
 import com.ServiceProvider.App.payload.responses.RatingResponse;
-import com.ServiceProvider.App.payload.responses.ServiceResponse;
 import com.ServiceProvider.App.service.RatingService;
 
 import org.slf4j.Logger;
@@ -18,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("home/ratings")
+
 public class RatingController {
 
     private static final Logger log = (Logger) LoggerFactory.getLogger(Rating.class);
@@ -89,7 +87,6 @@ public class RatingController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
-
 }
 
 

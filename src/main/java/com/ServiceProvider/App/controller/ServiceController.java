@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("home/services")
 public class ServiceController {
     private static final Logger log = (Logger) LoggerFactory.getLogger(MService.class);
-
     @Autowired
     private ServiceService service;
 

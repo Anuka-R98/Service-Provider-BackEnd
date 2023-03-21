@@ -22,7 +22,7 @@ import java.util.Set;
 
 @Service
 public class UserService {
-    private static final Logger log = (Logger) LoggerFactory.getLogger(User.class);
+    private static final Logger log =  LoggerFactory.getLogger(User.class);
     @Autowired
     private UserRepository userRepository;
     @Autowired
